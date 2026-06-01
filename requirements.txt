@@ -1,0 +1,8 @@
+# PySpark NIDS — tested on Python 3.12 + Java 11 (Ubuntu 22.04/24.04)
+pyspark==3.5.4
+py4j==0.10.9.7
+setuptools>=69.0.0
+pandas>=2.2.0
+numpy>=1.26.0
+scikit-learn>=1.4.0
+matplotlib>=3.8.0
