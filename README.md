@@ -8,7 +8,7 @@ This guide is written so **anyone can run the experiment** — copy each command
 
 ---
 
-## What this project does (in simple words)
+## What this project does
 
 1. **Loads** network traffic data (CSV files)
 2. **Cleans** and prepares the data
