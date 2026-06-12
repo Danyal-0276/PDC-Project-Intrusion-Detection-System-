@@ -67,7 +67,8 @@ def _clean_and_cast_features(df: DataFrame) -> DataFrame:
             raw = F.col(col_name)
             cleaned = F.when(raw.cast("string").isin(_INF_STRINGS), None).otherwise(raw)
             # Null/inf -> 0.0 so VectorAssembler and Naive Bayes never see NaN.
-            exprs.append(F.coalesce(cleaned.cast(DoubleType()), F.lit(0.0)).alias(col_name))
+            safe = F.when(cleaned.cast("string").rlike(r"^\s*-?[0-9]"), cleaned.cast(DoubleType())).otherwise(F.lit(0.0))
+            exprs.append(F.coalesce(safe, F.lit(0.0)).alias(col_name))
     return df.select(exprs)
 
 
@@ -116,7 +117,7 @@ def _load_one_cicids_file(spark: SparkSession, path: str) -> DataFrame:
 
     # Drop the header row still present as the first data row
     first_feature = headers[0]
-    df = df.filter(F.col(first_feature).cast(DoubleType()).isNotNull())
+    df = df.filter(F.col(first_feature) != headers[0])
 
     df = df.withColumn("source_file", F.lit(Path(path).name))
     return df

@@ -26,4 +26,4 @@ if [[ -f env/bin/activate ]]; then
   source env/bin/activate
 fi
 
-exec python scripts/run_experiment.py --split "$SPLIT" --size "$SIZE" --sample "$SAMPLE" "$@"
+exec python3 scripts/run_experiment.py --split "$SPLIT" --size "$SIZE" --sample "$SAMPLE" "$@"
